@@ -1,0 +1,833 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tadhg Doyle - Player Profile</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+    <!-- Font Awesome CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- Google Fonts - Roboto (for body and headers) and Anton (for Tadhg Doyle) -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&family=Playfair+Display:wght=300&family=Anton&display=swap" rel="stylesheet">
+
+    <style>
+        /* Base styles for body and html */
+        body, html {
+            height: 100%;
+            margin: 0;
+            overflow: hidden; /* Prevent global scroll to allow custom section scrolling */
+            font-family: 'Roboto', sans-serif;
+            background-color: #020502;
+        }
+
+        /* SPA Container for all sections */
+        .spa-container {
+            display: flex;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.5s ease-in-out; /* Smooth slide transition */
+            position: relative; /* Needed for absolute positioning of sections */
+            border-radius: 1rem;
+        }
+
+        /* Individual Page Sections */
+        .page-section {
+            flex-shrink: 0; /* Prevent sections from shrinking */
+            width: 100vw; /* Each section takes full viewport width */
+            height: 100vh; /* Each section takes full viewport height */
+            display: flex;
+            position: relative; /* For absolute positioning of inner elements */
+            overflow: hidden; /* Hide overflow within sections */
+            border-radius: 1rem;
+            background-color: #020502;
+        }
+
+        /* Shared styling for image and text areas across all pages */
+        .full-page-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: left;
+            z-index: 1;
+        }
+
+        /* Specific override for Page 9 image */
+        #page9 .full-page-image {
+            object-position: left;
+        }
+
+        /* Specific override for Page 10 image to show top left */
+        #page10 .full-page-image {
+            object-position: top left;
+        }
+
+        /* Specific override for Page 12 image to show top left */
+        #page12 .full-page-image {
+            object-position: top left;
+        }
+
+        /* Specific override for Page 13 image to show top left */
+        #page13 .full-page-image {
+            object-position: top left;
+        }
+        /* Specific override for Page 14 image to show top left */
+        #page14 .full-page-image {
+            object-position: top left;
+        }
+        /* Specific override for Page 15 image to show top left */
+        #page15 .full-page-image {
+            object-position: top left;
+        }
+        /* Specific override for Page 16 image to show top left */
+        #page16 .full-page-image {
+            object-position: top left;
+        }
+        /* Specific override for Page 17 image to show top left */
+        #page17 .full-page-image {
+            object-position: top left;
+        }
+        /* Specific override for Page 18 image to show top left */
+        #page18 .full-page-image {
+            object-position: top left;
+        }
+        /* Specific override for Page 19 image to show top left */
+        #page19 .full-page-image {
+            object-position: top left;
+        }
+        /* Specific override for Page 20 image to show top left */
+        #page20 .full-page-image {
+            object-position: top left;
+        }
+        /* Specific override for Page 21 image to show top left */
+        #page21 .full-page-image {
+            object-position: top left;
+        }
+
+
+        .image-gradient-overlay {
+            position: absolute;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to right, rgba(2,5,2,0), rgba(2,5,2,1));
+            z-index: 2;
+        }
+
+        .text-content-area {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 3;
+            color: white;
+            display: flex;
+            align-items: center; /* Center horizontally for all items */
+            justify-content: space-between; /* Space out content vertically */
+            flex-direction: column;
+            padding: 20px;
+            padding-top: 15px;
+            background-color: #020502;
+        }
+
+        /* Media query for landscape phone */
+        @media (min-width: 576px) and (orientation: landscape) {
+            .full-page-image {
+                left: 0;
+                width: 50%;
+                border-radius: 0.5rem;
+            }
+            .image-gradient-overlay {
+                left: 0;
+                width: 50%;
+                background: linear-gradient(to right, rgba(2,5,2,0), rgba(2,5,2,1));
+            }
+            .text-content-area {
+                left: 50%;
+                width: 50%;
+                right: auto;
+                padding-top: 10px; /* Reduced padding-top for landscape phone */
+            }
+            .content-text-block,
+            .history-year-text,
+            .history-detail-text,
+            .history-detail-small,
+            .highlight-text {
+                font-size: 0.8rem; /* Reduced font size for better fit on landscape phones */
+            }
+            .new-title-text {
+                font-size: 2rem; /* Adjusted for landscape phones */
+                margin-top: 5vh; /* Adjusted for landscape phones */
+            }
+        }
+
+        /* Media query for portrait phone */
+        @media (max-width: 575.98px) {
+            .full-page-section {
+                flex-direction: column;
+                border-radius: 0;
+            }
+            .full-page-image {
+                position: relative;
+                width: 100%;
+                height: 50%;
+                border-radius: 0;
+                left: auto;
+            }
+            .image-gradient-overlay {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 50%;
+                background: linear-gradient(to bottom, rgba(2,5,2,0), rgba(2,5,2,1));
+                border-radius: 0;
+            }
+            .text-content-area {
+                position: relative;
+                width: 100%;
+                height: 50%;
+                top: 50%;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                justify-content: space-between;
+                align-items: center;
+            }
+        }
+
+        /* Specific styling for the initial page title (Page 1) */
+        .new-title-text {
+            font-family: 'Anton', sans-serif;
+            font-size: 2.8rem;
+            font-weight: 700;
+            font-style: normal;
+            text-transform: none;
+            line-height: 1.1;
+            margin-bottom: 0.5rem;
+            color: white; /* Changed to white */
+            text-align: center;
+            width: 100%;
+            margin-top: 10vh; /* Adjusted to move further down */
+        }
+
+        /* Styling for Player Profile 2025 text */
+        .profile-subtitle-text {
+            font-weight: bold; /* Made bold */
+            color: #B0B0B0; /* Changed to grey */
+            text-align: center;
+            width: 100%;
+        }
+
+        /* Consistent header style for all subsequent pages */
+        .page-header-text {
+            font-family: 'Roboto', sans-serif;
+            font-size: 0.63rem;
+            font-weight: 700;
+            font-style: italic;
+            color: #B0B0B0;
+            margin-bottom: 0.25rem;
+            text-align: center;
+            width: 100%;
+        }
+
+        /* Removed existing button styles as they are replaced */
+        /* .btn-page, .btn-swipe, .btn-icon-only, .button-group are removed */
+
+        /* Specific styling for text content blocks (paragraphs and lists) */
+        .content-text-block {
+            text-align: left;
+            font-size: 0.9rem;
+            line-height: 1.4;
+            max-width: 90%;
+            margin: 0 auto;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        .content-text-block p, .content-text-block ul {
+            width: 100%;
+            text-align: left;
+            margin-bottom: 0.5rem;
+        }
+        .content-text-block ul {
+            list-style-type: disc;
+            padding-left: 20px;
+            margin-top: 0.5rem;
+        }
+        .content-text-block li {
+                margin-bottom: 0.5rem;
+        }
+
+        /* Logo styling */
+        .logo-img {
+            max-width: 120px;
+            height: auto;
+            margin-bottom: 1rem;
+            border-radius: 0.5rem;
+        }
+        .top-page-logo {
+            max-width: 75px;
+            height: auto;
+            margin-bottom: 0.1rem;
+            margin-top: 0.5rem;
+        }
+        .history-year-text {
+            font-family: 'Roboto', sans-serif;
+            font-weight: 300;
+            color: white;
+            font-size: 1.8rem;
+            margin-top: 0.1rem;
+            margin-bottom: 0.1rem;
+            text-align: center;
+            width: 100%;
+        }
+        .history-detail-text {
+            font-family: 'Roboto', sans-serif;
+            font-weight: 300;
+            color: white;
+            font-size: 0.9rem;
+            line-height: 1.2;
+            text-align: center;
+            width: 100%;
+            margin-top: 0;
+            margin-bottom: 0.1rem;
+        }
+        .history-detail-small {
+            font-size: 0.75rem;
+            opacity: 0.8;
+            text-align: center;
+            width: 100%;
+            margin-top: 0;
+        }
+        .ddsl-logo {
+            height: 1.2em;
+            width: auto;
+            vertical-align: middle;
+            margin-right: 0.2rem;
+        }
+        .highlight-text {
+            font-family: 'Roboto', sans-serif;
+            font-weight: 300;
+            color: #505050;
+            font-size: 2.4rem;
+            text-align: center;
+            width: 100%;
+            margin-top: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        /* New global navigation styles */
+        .global-nav-buttons {
+            position: fixed;
+            top: 50%;
+            left: 0;
+            right: 0;
+            transform: translateY(-50%);
+            display: flex;
+            justify-content: space-between;
+            padding: 0 1rem;
+            z-index: 10;
+        }
+
+        .nav-arrow {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 2.5rem;
+            cursor: pointer;
+            opacity: 0.5; /* Initial transparency */
+            transition: opacity 0.3s ease-in-out, color 0.3s ease-in-out;
+            text-decoration: none; /* Remove underline for anchor tags */
+            display: flex; /* To center icon if text were present */
+            align-items: center;
+            justify-content: center;
+        }
+
+        .nav-arrow:hover {
+            opacity: 1; /* Fully white on hover */
+            color: white; /* Ensure color stays white on hover */
+        }
+
+        /* Hide navigation arrows on the first and last page respectively */
+        .nav-arrow.hidden {
+            display: none;
+        }
+
+        /* Adjustments for Page 1's initial swipe button */
+        #page1 .btn-swipe {
+            background-color: #600000;
+            color: white;
+            border: 1px solid white;
+            padding: 0.5rem 1.5rem;
+            font-size: 0.9rem;
+            transition: background-color 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            border-radius: 0.5rem;
+        }
+        #page1 .btn-swipe:hover {
+            background-color: #7B0000;
+            color: white;
+            border-color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="spa-container" id="spaContainer">
+
+        <!-- Page 1 (index.html content) -->
+        <section id="page1" class="page-section">
+            <img src="https://github.com/TadhgDoyle/TadhgDoyleFootball/blob/main/TadhgCover2.jpg?raw=true" alt="Tadhg Cover Image" class="full-page-image">
+            <div class="image-gradient-overlay"></div>
+            <div class="text-content-area">
+                <p class="new-title-text">TestTadhg<br>Doyle</p>
+                <p class="mt-2 content-text-block profile-subtitle-text">Player Profile 2025</p>
+                <p class="text-muted small content-text-block">Optimized for landscape phone viewing. Swipe left to navigate.</p>
+                <a href="#" class="btn btn-swipe mt-3" onclick="navigatePage('next')">
+                    Swipe <i class="fas fa-arrow-left"></i>
+                </a>
+            </div>
+        </section>
+
+        <!-- Page 2 (Background) -->
+        <section id="page2" class="page-section">
+            <img src="https://raw.githubusercontent.com/TadhgDoyle/TadhgDoyleFootball/refs/heads/main/TadhgYoung.png" alt="Player Profile Image" class="full-page-image">
+            <div class="image-gradient-overlay"></div>
+            <div class="text-content-area">
+                <p class="page-header-text">Tadhg Doyle • Player Profile 2025 • Background</p>
+                <div class="content-text-block">
+                    <p>Born on 28th February 2012 in Portiuncula University Hospital, Ballinasloe, Ireland. Tadhg has been raised in 'Carrownure Lower', a townland near the small village of Lecarrow in South Roscommon. Obsessed with football since he could walk, Tadhg's stated aim in life, since he could express himself, is to become a professional footballer. This remains his vision for himself and his ultimate goal. During his early years Tadhg played with the local 'St. John's Athletic' team. Following the relaxation of covid restrictions, it was decided to give Tadhg the opportunity to play his football in Dublin within the DDSL league.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Page 3 (Overview/Skills) -->
+        <section id="page3" class="page-section">
+            <img src="https://raw.githubusercontent.com/TadhgDoyle/TadhgDoyleFootball/refs/heads/main/TadhgOnThe%20Ball.jpg" alt="Tadhg On The Ball Small Image" class="full-page-image">
+            <div class="image-gradient-overlay"></div>
+            <div class="text-content-area">
+                <p class="page-header-text">Tadhg Doyle • Player Profile 2025 • Overview</p>
+                <div class="content-text-block">
+                    <p>Tadhg is an incredibly skilled, gifted, aware, technical midfielder. He moulds himself in the impression of a combination of players such as Scholes, Iniesta, Verrati and Modric. Genuinely, and naturally two footed (constant work on what might be considered his weaker side, has often led to confusion as to which foot he actually plays off). His engine is well attested, measured and acknowledged, making him a true box to box player. Tadhg's preferred role is1 that of a '6', effectively 'quarterbacking' the game, ensuring efficient transition between the thirds. An extremely versatile player, Tadhg can perform and excel in any midfield role, play wing back on either side, play 8,10 or false 9.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Page 4 (Qualities) -->
+        <section id="page4" class="page-section">
+            <img src="https://github.com/TadhgDoyle/TadhgDoyleFootball/blob/main/Tadhg2025.jpg?raw=true" alt="Tadhg 2025 Image" class="full-page-image">
+            <div class="image-gradient-overlay"></div>
+            <div class="text-content-area">
+                <p class="page-header-text">Tadhg Doyle • Player Profile 2025 • Attributes</p>
+                <div class="content-text-block">
+                    <p>Tadhg's main attributes are his:</p>
+                    <ul>
+                        <li>Utter and unquestionable commitment and self belief. To every training session, match, and opportunity to better himself. Winning is everything, losing an unwanted but sometimes necessary opportunity to learn.</li>
+                        <li>Born to lead. Tadhg likes to lead by example and be vocal in a positive manner. Very evident in the choice of Tadhg with 'players player' recognitions throughout various seasons, clubs and tournaments.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Page 5 (New Attributes) -->
+        <section id="page5" class="page-section">
+            <img src="https://github.com/TadhgDoyle/TadhgDoyleFootball/blob/main/TadhgCaptainvsJoeys.jpg?raw=true" alt="Tadhg Captain vs Joeys Image" class="full-page-image">
+            <div class="image-gradient-overlay"></div>
+            <div class="text-content-area">
+                <p class="page-header-text">Tadhg Doyle • Player Profile 2025 • Attributes</p>
+                <div class="content-text-block">
+                    <ul>
+                        <li>Tadhg's technical skills are perhaps unmatched by any other '2012' player in the DDSL league. A truly gifted 'natural' footballer.</li>
+                        <li>Not the biggest player on the pitch, Tadhg uses his speed, agility, endurance, tactical nous, his physical and mental toughness to best his opponents. Brave and committed in the tackle.</li>
+                        <li>Football is his passion. He is driven to push his limits, learn and apply.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Page 6 (History) -->
+        <section id="page6" class="page-section">
+            <img src="https://github.com/TadhgDoyle/TadhgDoyleFootball/blob/main/2122/TadhgOnTheBallSmall.jpg?raw=true" alt="Tadhg On The Ball Small Image" class="full-page-image">
+            <div class="image-gradient-overlay"></div>
+            <div class="text-content-area">
+                <p class="page-header-text">Tadhg Doyle • Player Profile 2025 • History</p>
+                <img src="https://github.com/TadhgDoyle/TadhgDoyleFootball/blob/main/new_crest_24.png?raw=true" alt="St Kevins Boys Logo" class="top-page-logo">
+                <p class="history-year-text">2021 - 2022</p>
+                <p class="history-detail-text">League : DDSL U10.1 Sat</p>
+                <p class="history-detail-text history-detail-small">(Non Competitive - 7aside)</p>
+                <br>
+                <p class="history-detail-small">Awards and Recognitions</p>
+                <p class="history-detail-text"><i class="fas fa-trophy"></i> Belfast Cup (Trophy Section) Winners</p>
+                <p class="history-detail-text"><i class="fas fa-trophy"></i> Kells Blackwater Cup Winners</p>
+            </div>
+        </section>
+
+        <!-- Page 7 (History - Modified) -->
+        <section id="page7" class="page-section">
+            <img src="https://github.com/TadhgDoyle/TadhgDoyleFootball/blob/main/2122/TadhgBelfastCup.jpg?raw=true" alt="Tadhg On The Ball Small Image" class="full-page-image">
+            <div class="image-gradient-overlay"></div>
+            <div class="text-content-area">
+                <p class="page-header-text">Tadhg Doyle • Player Profile 2025 • History</p>
+                <img src="https://github.com/TadhgDoyle/TadhgDoyleFootball/blob/main/new_crest_24.png?raw=true" alt="St Kevins Boys Logo" class="top-page-logo">
+                <p class="history-year-text">2021 - 2022</p>
+                <br>
+                <p class="highlight-text">HIGHLIGHT</p>
+                <p class="history-detail-text"><i class="fas fa-trophy"></i> Belfast Cup (Trophy Section) Winners</p>
+            </div>
+        </section>
+
+        <!-- Page 8 (New History Section - Modified) -->
+        <section id="page8" class="page-section">
+            <img src="https://github.com/TadhgDoyle/TadhgDoyleFootball/blob/main/2223/TadhgCaptain.jpg?raw=true" alt="Tadhg Captain Image" class="full-page-image">
+            <div class="image-gradient-overlay"></div>
+            <div class="text-content-area">
+                <p class="page-header-text">Tadhg Doyle • Player Profile 2025 • History</p>
+                <img src="https://github.com/TadhgDoyle/TadhgDoyleFootball/blob/main/new_crest_24.png?raw=true" alt="St Kevins Boys Logo" class="top-page-logo">
+                <p class="history-year-text">2022 - 2023</p>
+                <p class="history-detail-text">League : DDSL U11.1 Sat</p>
+                <p class="history-detail-text">DDSL U12.1 Sun</p>
+                <p class="history-detail-small">(7 aside + 9 aside)</p>
+                <p class="history-detail-small" style="margin-top: 0.1rem;">Awards and Recognitions</p>
+                <p class="history-detail-text"><i class="fas fa-trophy"></i> Craigavon Cup Winners</p>
+                <p class="history-detail-text"><i class="fas fa-trophy"></i> DDSL U11 League Cup Winners</p>
+                <p class="history-detail-text"><i class="fas fa-trophy"></i> DDSL U12.1 Sun League Winners</p>
+                <p class="history-detail-text"><i class="fas fa-trophy"></i> DDSL U12 Sun League Cup Runners Up</p>
+                <p class="history-detail-text"><i class="fas fa-award"></i> Team Captain</p>
+                <p class="history-detail-text"><i class="fas fa-award"></i> Players POTY</p>
+            </div>
+        </section>
+
+        <!-- Page 9 (New History Section - Duplicated from Page 7, Modified) -->
+        <section id="page9" class="page-section">
+            <img src="https://github.com/TadhgDoyle/TadhgDoyleFootball/blob/main/2223/cup.jpg?raw=true" alt="Tadhg On The Ball Small Image" class="full-page-image">
+            <div class="image-gradient-overlay"></div>
+            <div class="text-content-area">
+                <p class="page-header-text">Tadhg Doyle • Player Profile 2025 • History</p>
+                <img src="https://github.com/TadhgDoyle/TadhgDoyleFootball/blob/main/new_crest_24.png?raw=true" alt="St Kevins Boys Logo" class="top-page-logo">
+                <p class="history-year-text">2022 - 2023</p>
+                <br>
+                <p class="highlight-text">HIGHLIGHT</p>
+                <img src="https://github.com/TadhgDoyle/TadhgDoyleFootball/blob/main/ddsl-logo.png?raw=true" alt="DDSL Logo" class="top-page-logo">
+                <br>
+                <p class="history-detail-text"><i class="fas fa-trophy"></i> Captained St. Kevin's to a League and Cup double.</p>
+            </div>
+        </section>
+
+        <!-- Page 10 (New History Section - Duplicated from Page 9) -->
+        <section id="page10" class="page-section">
+            <img src="https://github.com/TadhgDoyle/TadhgDoyleFootball/blob/main/2223/IMG_20230615_194030.jpg?raw=true" alt="Tadhg On The Ball Small Image" class="full-page-image">
+            <div class="image-gradient-overlay"></div>
+            <div class="text-content-area">
+                <p class="page-header-text">Tadhg Doyle • Player Profile 2025 • History</p>
+                <img src="https://github.com/TadhgDoyle/TadhgDoyleFootball/blob/main/new_crest_24.png?raw=true" alt="St Kevins Boys Logo" class="top-page-logo">
+                <p class="history-year-text">2022 - 2023</p>
+                <br>
+                <p class="highlight-text">HIGHLIGHT</p>
+                <p class="history-detail-text"><i class="fas fa-award"></i> Awarded Player's Player of the Year</p>
+            </div>
+        </section>
+
+        <!-- Page 11 (New History Section - Modified) -->
+        <section id="page11" class="page-section">
+            <img src="https://github.com/TadhgDoyle/TadhgDoyleFootball/blob/main/2324/OnTheBall23.jpg?raw=true" alt="Tadhg On The Ball Small Image" class="full-page-image">
+            <div class="image-gradient-overlay"></div>
+            <div class="text-content-area">
+                <p class="page-header-text">Tadhg Doyle • Player Profile 2025 • History</p>
+                <img src="https://github.com/TadhgDoyle/TadhgDoyleFootball/blob/main/new_crest_24.png?raw=true" alt="St Kevins Boys Logo" class="top-page-logo">
+                <p class="history-year-text">2023 - 2024</p>
+                <p class="history-detail-text">League : DDSL U12 Premier Sat</p>
+                <p class="history-detail-small">(9 aside)</p>
+                <p class="history-detail-small" style="margin-top: 0.1rem;">Awards and Recognitions</p>
+                <p class="history-detail-text"><i class="fas fa-trophy"></i> DDSL U12 League Cup Winners</p>
+                <p class="history-detail-text"><i class="fas fa-trophy"></i> SFAI National Trophy Winners</p>
+                <p class="history-detail-text"><i class="fas fa-award"></i> MOTM DDSL Cup Final</p>
+                <p class="history-detail-text"><i class="fas fa-award"></i> Scores winner vs Manchester Utd</p>
+            </div>
+        </section>
+
+        <!-- Page 12 (New History Section - Duplicated from Page 9) -->
+        <section id="page12" class="page-section">
+            <img src="https://github.com/TadhgDoyle/TadhgDoyleFootball/blob/main/2324/PXL_20240512_115142455.jpg?raw=true" alt="Tadhg On The Ball Small Image" class="full-page-image">
+            <div class="image-gradient-overlay"></div>
+            <div class="text-content-area">
+                <p class="page-header-text">Tadhg Doyle • Player Profile 2025 • History</p>
+                <img src="https://github.com/TadhgDoyle/TadhgDoyleFootball/blob/main/new_crest_24.png?raw=true" alt="St Kevins Boys Logo" class="top-page-logo">
+                <p class="history-year-text">2023 - 2024</p>
+                <br>
+                <p class="highlight-text">HIGHLIGHT</p>
+                <img src="https://github.com/TadhgDoyle/TadhgDoyleFootball/blob/main/cropped-SFAI-PNG-2-300x300.png?raw=true" alt="SFAI Logo" class="top-page-logo">
+                <br>
+                <p class="history-detail-text"><i class="fas fa-trophy"></i> SFAI National Trophy Winners</p>
+            </div>
+        </section>
+
+        <!-- Page 13 (New History Section - Duplicated from Page 12) -->
+        <section id="page13" class="page-section">
+            <img src="https://github.com/TadhgDoyle/TadhgDoyleFootball/blob/main/2324/PXL_20240525_111650111.MP.jpg?raw=true" alt="New Image for Page 13" class="full-page-image">
+            <div class="image-gradient-overlay"></div>
+            <div class="text-content-area">
+                <p class="page-header-text">Tadhg Doyle • Player Profile 2025 • History</p>
+                <img src="https://github.com/TadhgDoyle/TadhgDoyleFootball/blob/main/new_crest_24.png?raw=true" alt="St Kevins Boys Logo" class="top-page-logo">
+                <p class="history-year-text">2023 - 2024</p>
+                <br>
+                <p class="highlight-text">HIGHLIGHT</p>
+                <img src="https://github.com/TadhgDoyle/TadhgDoyleFootball/blob/main/ddsl-logo.png?raw=true" alt="DDSL Logo" class="top-page-logo">
+                <br>
+                <p class="history-detail-text"><i class="fas fa-award"></i> MOTM for the second year running in the DDSL Cup Final</p>
+            </div>
+        </section>
+
+        <!-- Page 14 (New History Section - Duplicated from Page 13) -->
+        <section id="page14" class="page-section">
+            <img src="https://github.com/TadhgDoyle/TadhgDoyleFootball/blob/main/2324/ManUtd.jpg?raw=true" alt="New Image for Page 14" class="full-page-image">
+            <div class="image-gradient-overlay"></div>
+            <div class="text-content-area">
+                <p class="page-header-text">Tadhg Doyle • Player Profile 2025 • History</p>
+                <img src="https://github.com/TadhgDoyle/TadhgDoyleFootball/blob/main/new_crest_24.png?raw=true" alt="St Kevins Boys Logo" class="top-page-logo">
+                <p class="history-year-text">2023 - 2024</p>
+                <br>
+                <p class="highlight-text">HIGHLIGHT</p>
+                <img src="https://github.com/TadhgDoyle/TadhgDoyleFootball/blob/main/2324/manutd.png?raw=true" alt="Man Utd Logo" class="top-page-logo">
+                <br>
+                <p class="history-detail-text"><i class="fas fa-award"></i> Scores winning goal in a 2-1 victory over Manchester Utd at the Carrington Training Ground</p>
+            </div>
+        </section>
+
+        <!-- Page 15 (New History Section - Duplicated from Page 11) -->
+        <section id="page15" class="page-section">
+            <img src="https://github.com/TadhgDoyle/TadhgDoyleFootball/blob/main/2425/FB_IMG_1745217751798.jpg?raw=true" alt="Cherry Orchard Boys Logo" class="full-page-image">
+            <div class="image-gradient-overlay"></div>
+            <div class="text-content-area">
+                <p class="page-header-text">Tadhg Doyle • Player Profile 2025 • History</p>
+                <img src="https://github.com/TadhgDoyle/TadhgDoyleFootball/blob/main/CherryOrchard.png?raw=true" alt="Cherry Orchard Boys Logo" class="top-page-logo">
+                <p class="history-year-text">2024 - 2025</p>
+                <p class="history-detail-text">League : DDSL U13 Premier Sat</p>
+                <p class="history-detail-small">(11 aside)</p>
+                <p class="history-detail-small" style="margin-top: 0.1rem;">Awards and Recognitions</p>
+                <p class="history-detail-text"><i class="fas fa-trophy"></i> DDSL U13 League Winners</p>
+                <p class="history-detail-text"><i class="fas fa-trophy"></i> SFAI National Cup Winners</p>
+                <p class="history-detail-text"><i class="fas fa-award"></i> Player's Player of the Tournament (Baronie Cup - Netherlands)</p>
+            </div>
+        </section>
+
+        <!-- Page 16 (New History Section - Duplicated from Page 12) -->
+        <section id="page16" class="page-section">
+            <img src="https://github.com/TadhgDoyle/TadhgDoyleFootball/blob/main/2425/TadhgAllIreland.jpg?raw=true" alt="Tadhg On The Ball Small Image" class="full-page-image">
+            <div class="image-gradient-overlay"></div>
+            <div class="text-content-area">
+                <p class="page-header-text">Tadhg Doyle • Player Profile 2025 • History</p>
+                <img src="https://github.com/TadhgDoyle/TadhgDoyleFootball/blob/main/CherryOrchard.png?raw=true" alt="Cherry Orchard Boys Logo" class="top-page-logo">
+                <p class="history-year-text">2024 - 2025</p>
+                <br>
+                <p class="highlight-text">HIGHLIGHT</p>
+                <img src="https://github.com/TadhgDoyle/TadhgDoyleFootball/blob/main/cropped-SFAI-PNG-2-300x300.png?raw=true" alt="SFAI Logo" class="top-page-logo">
+                <br>
+                <p class="history-detail-text"><i class="fas fa-trophy"></i> SFAI National Cup Winners</p>
+            </div>
+        </section>
+
+        <!-- Page 17 (Copy of Page 16) -->
+        <section id="page17" class="page-section">
+            <img src="https://github.com/TadhgDoyle/TadhgDoyleFootball/blob/main/2425/League.jpg?raw=true" alt="New League Image" class="full-page-image">
+            <div class="image-gradient-overlay"></div>
+            <div class="text-content-area">
+                <p class="page-header-text">Tadhg Doyle • Player Profile 2025 • History</p>
+                <img src="https://github.com/TadhgDoyle/TadhgDoyleFootball/blob/main/CherryOrchard.png?raw=true" alt="Cherry Orchard Boys Logo" class="top-page-logo">
+                <p class="history-year-text">2024 - 2025</p>
+                <br>
+                <p class="highlight-text">HIGHLIGHT</p>
+                <img src="https://github.com/TadhgDoyle/TadhgDoyleFootball/blob/main/ddsl-logo.png?raw=true" alt="DDSL Logo" class="top-page-logo">
+                <br>
+                <p class="history-detail-text"><i class="fas fa-trophy"></i> DDSL U13 League Champions</p>
+            </div>
+        </section>
+
+        <!-- Page 18 (New page copied from Page 15) -->
+        <section id="page18" class="page-section">
+            <img src="https://github.com/TadhgDoyle/TadhgDoyleFootball/blob/main/2425/glanduff.jpg?raw=true" alt="Glanduff Team Image" class="full-page-image">
+            <div class="image-gradient-overlay"></div>
+            <div class="text-content-area">
+                <p class="page-header-text">Tadhg Doyle • Player Profile 2025 • History</p>
+                <img src="https://github.com/TadhgDoyle/TadhgDoyleFootball/blob/main/FAISchools.png?raw=true" alt="FAI Schools Logo" class="top-page-logo">
+                <p class="history-year-text">2024 - 2025</p>
+                <p class="history-detail-text">Glanduff National School</p>
+                <p class="history-detail-small">(5 aside)</p>
+                <p class="history-detail-small" style="margin-top: 0.1rem;">Awards and Recognitions</p>
+                <p class="history-detail-text"><i class="fas fa-trophy"></i> Roscommon County Champions</p>
+                <p class="history-detail-text"><i class="fas fa-trophy"></i> Connacht Provincial Champions</p>
+                <p class="history-detail-text"><i class="fas fa-trophy"></i> FAI Schools All Ireland Runners Up</p>
+                <p class="history-detail-text"><i class="fas fa-award"></i> Captain</p>
+            </div>
+        </section>
+
+        <!-- Page 19 (New page copied from Page 17) -->
+        <section id="page19" class="page-section">
+            <img src="https://github.com/TadhgDoyle/TadhgDoyleFootball/blob/main/2425/PXL_20250508_130336084.MP.jpg?raw=true" alt="New League Image" class="full-page-image">
+            <div class="image-gradient-overlay"></div>
+            <div class="text-content-area">
+                <p class="page-header-text">Tadhg Doyle • Player Profile 2025 • History</p>
+                <img src="https://github.com/TadhgDoyle/TadhgDoyleFootball/blob/main/FAISchools.png?raw=true" alt="FAI Schools Logo" class="top-page-logo">
+                <p class="history-year-text">2024 - 2025</p>
+                <br>
+                <p class="highlight-text">HIGHLIGHT</p>
+                <img src="https://github.com/TadhgDoyle/TadhgDoyleFootball/blob/main/Football_Association_of_Ireland_logo.svg.png?raw=true" alt="FAI Logo" class="top-page-logo">
+                <br>
+                <p class="history-detail-text"><i class="fas fa-trophy"></i> Roscommon County and Connacht Provincial Champions</p>
+            </div>
+        </section>
+
+        <!-- Page 20 (Copy of Page 19) -->
+        <section id="page20" class="page-section">
+            <img src="https://github.com/TadhgDoyle/TadhgDoyleFootball/blob/main/2425/PXL_20250611_095851776.MP~2.jpg?raw=true" alt="New League Image" class="full-page-image">
+            <div class="image-gradient-overlay"></div>
+            <div class="text-content-area">
+                <p class="page-header-text">Tadhg Doyle • Player Profile 2025 • History</p>
+                <img src="https://github.com/TadhgDoyle/TadhgDoyleFootball/blob/main/FAISchools.png?raw=true" alt="FAI Schools Logo" class="top-page-logo">
+                <p class="history-year-text">2024 - 2025</p>
+                <br>
+                <p class="highlight-text">HIGHLIGHT</p>
+                <br>
+                <p class="history-detail-text"><i class="fas fa-award"></i> In June 2025 Glanduff National School had the opportunity to play in the Aviva Stadium competing in the FAI Schools All Ireland Final. Finishing as Runners Up, this has been a tremendous achievement for this small country school.</p>
+            </div>
+        </section>
+
+        <!-- Page 21 (Copy of Page 20) -->
+        <section id="page21" class="page-section">
+            <img src="https://github.com/TadhgDoyle/TadhgDoyleFootball/blob/main/michael-obafemi3.png?raw=true" alt="New League Image" class="full-page-image">
+            <div class="image-gradient-overlay"></div>
+            <div class="text-content-area">
+                <p class="page-header-text">Tadhg Doyle • Player Profile 2025 • Future</p>
+                <!-- New introductory text added here -->
+                <p class="content-text-block" style="margin-top: 1rem;">
+                    During Tadhg's 4 years in Dublin he has benefitted from excellent Football Infrastructure, Management and Top Class Coaching. These factors, combined with his own attributes, a little luck and a lot of diesel have made Tadhg the country's most decorated 2012 footballer. The journey continues....
+                </p>
+                <!-- FAI Schools Logo removed as requested -->
+                <!-- History Year text removed as requested -->
+                <p class="highlight-text">Your Role</p>
+                <p class="history-detail-text">Move Tadhg from position A to position B.</p>
+                <br>
+                <br>
+                <p class="history-detail-text"><i class="fas fa-envelope"></i> Contact: TadhgDoyleFootball@gmail.com</p>
+            </div>
+        </section>
+
+    </div> <!-- End spa-container -->
+
+    <!-- Global Navigation Buttons -->
+    <div class="global-nav-buttons">
+        <a href="#" class="nav-arrow nav-prev" onclick="navigatePage('prev')">
+            <i class="fas fa-chevron-left"></i>
+        </a>
+        <a href="#" class="nav-arrow nav-next" onclick="navigatePage('next')">
+            <i class="fas fa-chevron-right"></i>
+        </a>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+    <script>
+        const spaContainer = document.getElementById('spaContainer');
+        const sections = document.querySelectorAll('.page-section');
+        let currentPageIndex = 0; // Start at the first page (index 0)
+
+        // Function to navigate to a specific page index
+        function goToPage(index) {
+            if (index >= 0 && index < sections.length) {
+                currentPageIndex = index;
+                spaContainer.style.transform = `translateX(-${currentPageIndex * 100}vw)`;
+
+                // Update visibility of navigation arrows
+                const navPrev = document.querySelector('.nav-prev');
+                const navNext = document.querySelector('.nav-next');
+
+                if (navPrev) {
+                    if (currentPageIndex === 0) {
+                        navPrev.classList.add('hidden');
+                    } else {
+                        navPrev.classList.remove('hidden');
+                    }
+                }
+                if (navNext) {
+                    if (currentPageIndex === sections.length - 1) {
+                        navNext.classList.add('hidden');
+                    } else {
+                        navNext.classList.remove('hidden');
+                    }
+                }
+            }
+            // Update the URL hash to reflect the current page
+            window.location.hash = `#page${currentPageIndex + 1}`;
+        }
+
+        // --- Event Listeners for Navigation ---
+
+        // Autoscroll for Page 1 (index 0) only
+        window.onload = function() {
+            // Check if there's a hash in the URL, and navigate to that page
+            if (window.location.hash) {
+                const pageId = window.location.hash.substring(1); // Remove '#'
+                const pageElement = document.getElementById(pageId);
+                if (pageElement) {
+                    const index = Array.from(sections).indexOf(pageElement);
+                    if (index !== -1) {
+                        goToPage(index);
+                    }
+                }
+            }
+            // Initial positioning and arrow visibility (important for SPA context)
+            goToPage(currentPageIndex);
+        };
+
+        // Swipe detection for phone navigation on the main container
+        let touchstartX = 0;
+        let touchendX = 0;
+        const minSwipeDistance = 50; // Minimum distance in pixels for a swipe
+
+        spaContainer.addEventListener('touchstart', e => {
+            touchstartX = e.changedTouches[0].screenX;
+        });
+
+        spaContainer.addEventListener('touchend', e => {
+            touchendX = e.changedTouches[0].screenX;
+            handleGesture();
+        });
+
+        function handleGesture() {
+            if (touchendX < touchstartX - minSwipeDistance) {
+                // Swiped left (go to next page)
+                navigatePage('next');
+            } else if (touchendX > touchstartX + minSwipeDistance) {
+                // Swiped right (go to previous page)
+                navigatePage('prev');
+            }
+        }
+
+        // Unified navigation function for buttons and swipes
+        function navigatePage(direction) {
+            if (direction === 'next') {
+                if (currentPageIndex < sections.length - 1) {
+                    goToPage(currentPageIndex + 1);
+                }
+            } else if (direction === 'prev') {
+                if (currentPageIndex > 0) {
+                    goToPage(currentPageIndex - 1);
+                }
+            } else if (typeof direction === 'number') { // For direct button clicks by page index
+                goToPage(direction);
+            }
+        }
+
+        // The previous handleCombinedButtonClick function is no longer needed as the buttons are replaced.
+
+    </script>
+</body>
+</html>
